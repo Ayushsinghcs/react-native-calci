@@ -3,52 +3,119 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 export default function App() {
-  const [value, setValue] = React.useState(operandTwo + operandOne);
+  const [value, setValue] = React.useState(0);
   const [operandOne, setOperandOne] = React.useState(0);
   const [operandTwo, setOperandTwo] = React.useState(0);
   const [operator, setOperator] = React.useState(null);
-  const [isOperator] = React.useState(false);
+  const [isOperator, setOperatorBoolean] = React.useState(false);
 
   const updateNumber = (name) => {
     let number = isOperator ? operandTwo : operandOne;
+    let computedValue
     switch (name) {
+      case "number-nine":
+        isOperator
+          ?
+          setOperandTwo(number * 10 + 9)
+          : setOperandOne(number * 10 + 9);
+        break;
+      case "number-eight":
+        isOperator
+          ? setOperandTwo(number * 10 + 8)
+          : setOperandOne(number * 10 + 8);
+        break;
       case "number-seven":
         isOperator
           ? setOperandTwo(number * 10 + 7)
           : setOperandOne(number * 10 + 7);
         break;
-      case "number-nine":
+      case "number-six":
         isOperator
-          ? setOperandTwo(number * 10 + 9)
-          : setOperandOne(number * 10 + 9);
+          ? setOperandTwo(number * 10 + 6)
+          : setOperandOne(number * 10 + 6);
+        break;
+      case "number-five":
+        isOperator
+          ? setOperandTwo(number * 10 + 5)
+          : setOperandOne(number * 10 + 5);
+        break;
+      case "number-four":
+        isOperator
+          ? setOperandTwo(number * 10 + 4)
+          : setOperandOne(number * 10 + 4);
+        break;
+      case "number-three":
+        isOperator
+          ? setOperandTwo(number * 10 + 3)
+          : setOperandOne(number * 10 + 3);
+        break;
+      case "number-two":
+        isOperator
+          ? setOperandTwo(number * 10 + 2)
+          : setOperandOne(number * 10 + 2);
+        break;
+      case "number-one":
+        isOperator
+          ? setOperandTwo(number * 10 + 1)
+          : setOperandOne(number * 10 + 1);
+        break;
+      case "number-zero":
+        isOperator
+          ? setOperandTwo(number * 10)
+          : setOperandOne(number * 10);
         break;
     }
   };
+  const resetValue = () => {
+    setOperatorBoolean(false);
+    setOperandOne(0)
+    setOperandTwo(0)
+    setOperator(null)
+    setValue(0)
+  }
 
   const updateOperator = (operatorName) => {
-    let computedValue;
+
+    setOperatorBoolean(true);
     if (operatorName === "operator-divide") {
-      computedValue = operandOne / operandTwo;
+
       setOperator("/");
-      setValue(computedValue);
+
     } else if (operatorName === "operator-multiply") {
-      computedValue = operandOne / operandTwo;
       setOperator("x");
-      setValue(computedValue);
+
+    } else if (operatorName === "operator-substract") {
+
+
+      setOperator("-");
+
+    } else if (operatorName === "operator-add") {
+
+
+      setOperator("+");
+
     }
   };
+
+  // if (operandTwo !== 0 && isOperator) {
+  //   let computedValue = operandOne + operator + operandTwo;
+  //   setValue(computedValue);
+  //   console.log(computedValue)
+  // }
+  console.log(value)
+  console.log(operandTwo + 'op')
   return (
     <View style={styles.container}>
       <View style={styles.outerElement}>
         <TouchableOpacity style={styles.content}>
           <Text style={styles.contentText}>
             {operandOne} {operator}
-            {operandTwo}
+            {isOperator && operandTwo !== 0 ? operandTwo : null}
           </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.box}>
-        <Text style={styles.elementBorder} onPress={() => setValue(0)}>
+        <Text style={styles.elementBorder} onPress={resetValue}>
           AC
         </Text>
         <Text style={styles.elementBorder}>C</Text>
@@ -63,14 +130,14 @@ export default function App() {
       <View style={styles.box}>
         <Text
           style={styles.element}
-          onPress={(e) => updateNumber(e, "number-seven")}
+          onPress={(e) => updateNumber("number-seven")}
         >
           7
         </Text>
-        <Text style={styles.element}>8</Text>
+        <Text style={styles.element} onPress={(e) => updateNumber("number-eight")}>8</Text>
         <Text
           style={styles.element}
-          onPress={(e) => updateNumber(e, "number-nine")}
+          onPress={(e) => updateNumber("number-nine")}
         >
           9
         </Text>
@@ -82,20 +149,20 @@ export default function App() {
         </Text>
       </View>
       <View style={styles.box}>
-        <Text style={styles.element}>4</Text>
-        <Text style={styles.element}>5</Text>
-        <Text style={styles.element}>6</Text>
-        <Text style={styles.elementBorder}>-</Text>
+        <Text style={styles.element} onPress={(e) => updateNumber("number-four")}>4</Text>
+        <Text style={styles.element} onPress={(e) => updateNumber("number-five")}>5</Text>
+        <Text style={styles.element} onPress={(e) => updateNumber("number-six")}>6</Text>
+        <Text style={styles.elementBorder} onPress={() => updateOperator("operator-substract")}>-</Text>
       </View>
       <View style={styles.box}>
-        <Text style={styles.element}>1</Text>
-        <Text style={styles.element}>2</Text>
-        <Text style={styles.element}>3</Text>
-        <Text style={styles.elementBorder}>+</Text>
+        <Text style={styles.element} onPress={(e) => updateNumber("number-one")}>1</Text>
+        <Text style={styles.element} onPress={(e) => updateNumber("number-two")}>2</Text>
+        <Text style={styles.element} onPress={(e) => updateNumber("number-three")}>3</Text>
+        <Text style={styles.elementBorder} onPress={() => updateOperator("operator-add")}>+</Text>
       </View>
       <View style={styles.box}>
         <Text style={styles.element}></Text>
-        <Text style={styles.element}>0</Text>
+        <Text style={styles.element} onPress={(e) => updateNumber("number-zero")}>0</Text>
         <Text style={styles.element}>.</Text>
         <Text style={styles.elementBorder}>=</Text>
       </View>

@@ -20,8 +20,8 @@ export default function App() {
       setOperator(null);
       setOperatorBoolean(false);
       setOperandTwo(0);
-    } else if (isOperator) {
-      setOperandTwo(parseInt(operandOne / 10));
+    } else if (isOperator && operandTwo !== 0) {
+      setOperandTwo(parseInt(operandTwo / 10));
     }
   };
   const calculateTotal = () => {
